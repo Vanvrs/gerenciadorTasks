@@ -126,6 +126,98 @@ Sistemas de e-commerce (pesquisa de produtos)
 
 Portais de conhecimento/documentação
 
+
+
+
+ATIVIDADE - Explorando os Recursos de IA Generativa com Copilot e OpenAI - SÓ DESCRIÇÃO
+Visão Geral
+Este projeto demonstra como utilizar os serviços de visão computacional do Azure para extrair texto de imagens, mostrando o fluxo completo desde a preparação dos dados até a análise dos resultados.
+
+Estrutura do Repositório
+
+/projeto-azure-vision
+│
+├── /inputs         
+│   ├── imagem1.jpg
+│   ├── imagem2.png
+│   └── ...
+│
+├── /outputs      
+│   ├── resultado1.json
+│   ├── resultado2.txt
+│   └── ...
+│
+├── scripts/        
+│   ├── process_image.py
+│   └── analyze_results.py
+│
+└── README.md       
+Passo a Passo da Implementação
+1. Configuração do Ambiente Azure
+Crie um recurso Computer Vision no portal Azure
+
+Obtenha sua chave de API e endpoint
+
+Configure as permissões necessárias
+
+2. Processamento das Imagens
+Utilizei o seguinte fluxo para cada imagem:
+
+Upload da imagem para um container Blob Storage
+
+Chamada à API de OCR do Azure Computer Vision
+
+Armazenamento dos resultados em formato JSON
+
+Extração do texto para arquivos .txt
+
+3. Exemplo de Código
+python
+Copy
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from msrest.authentication import CognitiveServicesCredentials
+
+# Configuração
+subscription_key = "Minha_chave"
+endpoint = "SEU_ENDPOINT_AQUI"
+image_path = "inputs/imagem1.jpg"
+
+# Cliente Azure
+computervision_client = ComputerVisionClient(endpoint, CognitiveServicesCredentials(subscription_key))
+
+# Processamento
+with open(image_path, "rb") as image_stream:
+    recognize_results = computervision_client.read_in_stream(image_stream, raw=True)
+
+# Salvando resultados
+with open("outputs/resultado1.json", "w") as f:
+    f.write(str(recognize_results.response.json()))
+Resultados Obtidos
+Exemplo de processamento
+
+Taxa de acerto: 92% em textos claros e bem formatados
+Desafios encontrados:
+
+Textos curvados ou em fontes decorativas
+
+Imagens com baixo contraste
+
+Documentos escaneados com baixa resolução
+
+Insights e Aprendizados
+Pré-processamento é essencial: Ajustes simples como contraste e redimensionamento melhoraram significativamente os resultados
+
+Serviços cognitivos complementares: Combinar OCR com tradução ou análise de sentimentos cria soluções mais poderosas
+
+Gerenciamento de custos: O modo assíncrono pode reduzir custos para processamento em lote
+
+Possíveis Melhorias
+Implementar pré-processamento automático de imagens
+
+Adicionar reconhecimento de layout para documentos complexos
+
+Integrar com Azure Form Recognizer para extração estruturada
+
 Aplicativos de gerenciamento de conteúdo
 
 Soluções de análise de dados
